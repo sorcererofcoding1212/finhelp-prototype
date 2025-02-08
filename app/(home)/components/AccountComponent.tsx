@@ -61,7 +61,7 @@ const AccountComponent: React.FC<AccountComponentProps> = ({ accounts }) => {
       fetchSearchAccounts();
     }, DEBOUNCE_DELAY);
     return () => clearTimeout(handler);
-  }, [searchItem, fetchSearchAccounts]);
+  }, [searchItem]);
   return (
     <>
       <div className="mb-4 text-center">
