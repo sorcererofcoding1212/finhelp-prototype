@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String    @id @default(cuid())
+  email    String    @unique
+  name     String
+  password String
+  accounts Account[]
+}
+
+model Record {
+  id              String   @id @default(cuid())
+  type            Type
+  amount          Float
+  createdAt       DateTime @default(now())
+  recordHolder    String?
+  counterEntityId String
+  counterEntity   Account  @relation(name: "AccountToRecord", fields: [counterEntityId], references: [id], onDelete: Cascade)
+  settled         Boolean? @default(false)
+}
+
+model Account {
+  id                String   @id @default(cuid())
+  counterEntityName String
+  createdAt         DateTime @default(now())
+  records           Record[] @relation(name: "AccountToRecord")
+  holderId          String
+  holder            User     @relation(fields: [holderId], references: [email], onDelete: Cascade)
+}
+
+enum Type {
+  CREDIT
+  DEBIT
+}
