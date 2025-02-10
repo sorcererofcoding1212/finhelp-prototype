@@ -18,6 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "FinHelp",
   description: "Authentication page for FinHelp application",
+  icons: "favicon.png",
 };
 
 const AuthLayout = ({ children }: { children: Readonly<ReactNode> }) => {
